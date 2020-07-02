@@ -1,4 +1,4 @@
-package com.my.mythings2.bean
+package com.my.mythings2.model.bean
 
 /**
  * @author 文琳

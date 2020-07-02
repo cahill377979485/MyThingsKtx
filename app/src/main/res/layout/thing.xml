@@ -6,11 +6,11 @@
 
         <variable
             name="item"
-            type="com.my.mythings2.bean.Thing" />
+            type="com.my.mythings2.model.bean.Thing" />
 
         <variable
             name="click"
-            type="com.my.mythings2.binder.ClickThing" />
+            type="com.my.mythings2.view.binder.ClickThing" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

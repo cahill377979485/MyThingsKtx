@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.LogUtils
 import com.my.mythings2.model.MyRepository
 import com.my.mythings2.util.ToastUtils
-import com.my.mythings2.bean.Thing
+import com.my.mythings2.model.bean.Thing
 import com.my.mythings2.util.MyUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

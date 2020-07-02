@@ -9,9 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.my.mythings2.*
-import com.my.mythings2.bean.Thing
-import com.my.mythings2.bean.TypeData
-import com.my.mythings2.binder.ThingBinder
+import com.my.mythings2.model.bean.Thing
+import com.my.mythings2.model.bean.TypeData
+import com.my.mythings2.view.binder.ThingBinder
 import com.my.mythings2.databinding.ActivityMainBinding
 import com.my.mythings2.util.MyUtil
 import com.my.mythings2.util.ToastUtils
@@ -47,7 +47,10 @@ class MainActivity : AppCompatActivity() {
         mBinding.vm = mViewModel
         mBinding.lifecycleOwner = this//重要！DataBinding加上这句之后，绑定了LiveData数据源的xml控件才会随着数据变化而改变。
         mAdapter = MultiTypeAdapter(mItems)
-        mAdapter.register(Thing::class.java, ThingBinder())
+        mAdapter.register(
+            Thing::class.java,
+            ThingBinder()
+        )
         mBinding.rv.apply {
             layoutManager = GridLayoutManager(context, 1)
             setHasFixedSize(true)

@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.my.mythings2.model.MyRepository
-import com.my.mythings2.bean.Thing
+import com.my.mythings2.model.bean.Thing
 import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
 import java.util.*

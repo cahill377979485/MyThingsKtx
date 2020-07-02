@@ -2,8 +2,8 @@ package com.my.mythings2.model
 
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.Gson
-import com.my.mythings2.bean.Thing
-import com.my.mythings2.bean.Things
+import com.my.mythings2.model.bean.Thing
+import com.my.mythings2.model.bean.Things
 import com.my.mythings2.util.MyUtil
 import java.util.ArrayList
 
@@ -30,7 +30,10 @@ class MyRepository {
         }
 
     fun save(list: List<Thing>?) {
-        SPUtils.getInstance().put(DATA, Gson().toJson(Things(list), Things::class.java))
+        SPUtils.getInstance().put(DATA, Gson().toJson(
+            Things(
+                list
+            ), Things::class.java))
     }
 
     fun add(thing: Thing) {
