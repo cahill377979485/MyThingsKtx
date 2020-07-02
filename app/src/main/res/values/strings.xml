@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">爱的宝贝2</string>
+    <string name="input">录入</string>
+    <string name="input_thing">输入物品加价格，例如：电脑4999</string>
+    <string name="real_time_search">实时搜索</string>
+    <string name="modify">更新</string>
+    <string name="delete">删除</string>
+</resources>
