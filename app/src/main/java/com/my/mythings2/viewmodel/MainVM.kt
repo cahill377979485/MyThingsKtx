@@ -92,7 +92,6 @@ class MainVM(application: Application) : AndroidViewModel(application) {
 
     fun tryUpdateThing(thing: Thing) {
         updateFlag.postValue(true)
-        etText.postValue("")
         updatePosition = thing.position
     }
 

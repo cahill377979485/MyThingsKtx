@@ -105,10 +105,11 @@ object MyUtil {
                     arr[1] = result.value.replace(it, "", ignoreCase = true)
                 }
             }
-            if (arr[1] == ".")
-                arr[1] = "0"
-            else if (arr[1].startsWith("."))
-                arr[1] = "0" + arr[1]
+            when {
+                arr[1] == "." -> arr[1] = "0"
+                arr[1].endsWith(".") -> arr[1] = arr[1].substring(0, arr[1].length - 1)
+                arr[1].startsWith(".") -> arr[1] = "0" + arr[1]
+            }
         }
         return arr
     }

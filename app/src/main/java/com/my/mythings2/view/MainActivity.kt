@@ -95,10 +95,10 @@ class MainActivity : AppCompatActivity() {
                         dialog.dismiss()
                     }
                     setNegativeButton("更新") { dialog, _ ->
+                        mViewModel.tryUpdateThing(thing)
                         val str: String = thing.name + thing.price
                         mBinding.et.setText(str)
                         mBinding.et.setSelection(str.length)
-                        mViewModel.tryUpdateThing(thing)
                         dialog.dismiss()
                     }
                     setPositiveButton("取消", null)
