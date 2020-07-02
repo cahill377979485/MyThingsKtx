@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
             })
             searchFlag.observe(owner, Observer {
                 if (it) {
-                    val str: String = et.text.toString().trim()
+                    val str: String = mBinding.et.text.toString().trim()
                     mBinding.et.setText(str)
                     mBinding.et.setSelection(str.length)
                 } else {

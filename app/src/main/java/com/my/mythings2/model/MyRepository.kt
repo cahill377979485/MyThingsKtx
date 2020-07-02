@@ -58,7 +58,7 @@ class MyRepository {
 
     fun update(updatePosition: Int, str: String) {
         thingList?.let {
-            val arr: Array<String> = MyUtil.getNameAndPrice(str)
+            val arr: Array<String> = MyUtil.getNameAndPrice2(str)
             //因为是倒序所以这里要list.size-1-position
             it[it.size - 1 - updatePosition].name = arr[0]
             it[it.size - 1 - updatePosition].price = arr[1]

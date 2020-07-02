@@ -90,6 +90,32 @@ object MyUtil {
         helper.attachToRecyclerView(rv)
     }
 
+    /**
+     * 解析物品和价格
+     */
+    fun getNameAndPrice2(str: String): Array<String> {
+        val arr = arrayOf(str, "")
+        str.let {
+            Regex("-?\\d*\\.?\\d*$").find(str)?.let {
+                arr[0] = str.replace(it.value, "")
+                arr[1] = it.value
+            }
+            Regex("\\.\\d*(0+)$").find(arr[1])?.let { result ->
+                result.groups[1]?.value?.let {
+                    arr[1] = result.value.replace(it, "", ignoreCase = true)
+                }
+            }
+            if (arr[1] == ".")
+                arr[1] = "0"
+            else if (arr[1].startsWith("."))
+                arr[1] = "0" + arr[1]
+        }
+        return arr
+    }
+
+    /**
+     * 解析物品和价格
+     */
     fun getNameAndPrice(str: String): Array<String> {
         val arr = arrayOf("", "")
         str.let {

@@ -64,7 +64,7 @@ class MainVM(application: Application) : AndroidViewModel(application) {
     }
 
     private fun addThing(str: String) {
-        val arr: Array<String> = MyUtil.getNameAndPrice(str)
+        val arr: Array<String> = MyUtil.getNameAndPrice2(str)
         repository.thingList?.let {
             for (i in it.indices) {
                 if (it[i].name == arr[0]) {
@@ -107,7 +107,7 @@ class MainVM(application: Application) : AndroidViewModel(application) {
             dataList.postValue(it)//这句因为数据改变，在MainActivity中被观察到，所以会自动更新列表
         }
         val str: String = preString + "：" + total / 100
-        totalStr.postValue(str.replace(".00$".toRegex(), "").replace(".0$".toRegex(), ""))
+        totalStr.postValue(str.replace(".0+$".toRegex(), ""))
     }
 
     private fun afterTextChanged(s: String) {
