@@ -1,4 +1,4 @@
-package com.my.mythings2.util
+package com.my.mythings2.xutil
 
 /**
  * @author 文琳

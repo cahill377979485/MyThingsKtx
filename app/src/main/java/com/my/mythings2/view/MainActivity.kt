@@ -13,11 +13,9 @@ import com.my.mythings2.model.bean.Thing
 import com.my.mythings2.model.bean.TypeData
 import com.my.mythings2.view.binder.ThingBinder
 import com.my.mythings2.databinding.ActivityMainBinding
-import com.my.mythings2.util.MyUtil
-import com.my.mythings2.util.ToastUtils
-import com.my.mythings2.util.TypeDataNames
+import com.my.mythings2.xutil.MyUtil
+import com.my.mythings2.xutil.TypeDataNames
 import com.my.mythings2.viewmodel.MainVM
-import kotlinx.android.synthetic.main.activity_main.*
 import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
 import org.greenrobot.eventbus.EventBus
@@ -102,9 +100,7 @@ class MainActivity : AppCompatActivity() {
                         dialog.dismiss()
                     }
                     setPositiveButton("取消", null)
-                    create()
-                    show()
-                }
+                }.create().show()
             }
         }
     }

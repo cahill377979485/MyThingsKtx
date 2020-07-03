@@ -6,15 +6,10 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.blankj.utilcode.util.LogUtils
 import com.my.mythings2.model.MyRepository
-import com.my.mythings2.util.ToastUtils
+import com.my.mythings2.xutil.ToastUtils
 import com.my.mythings2.model.bean.Thing
-import com.my.mythings2.util.MyUtil
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.my.mythings2.xutil.MyUtil
 
 /**
  * @author 文琳
@@ -63,8 +58,11 @@ class MainVM(application: Application) : AndroidViewModel(application) {
         refreshFlag.postValue(true)
     }
 
+    /**
+     * 添加物品
+     */
     private fun addThing(str: String) {
-        val arr: Array<String> = MyUtil.getNameAndPrice2(str)
+        val arr: Array<String> = MyUtil.getNameAndPriceArrayByRegex(str)
         repository.thingList?.let {
             for (i in it.indices) {
                 if (it[i].name == arr[0]) {
@@ -79,22 +77,34 @@ class MainVM(application: Application) : AndroidViewModel(application) {
         refreshData()
     }
 
+    /**
+     * 删除物品
+     */
     fun deleteThing(name: String) {
         repository.delete(name)
         refreshData()
     }
 
+    /**
+     * 更新物品
+     */
     private fun updateThing(str: String) {
         repository.update(updatePosition, str)
         refreshData()
         updateFlag.postValue(false)
     }
 
+    /**
+     * 为更新做准备
+     */
     fun tryUpdateThing(thing: Thing) {
         updateFlag.postValue(true)
         updatePosition = thing.position
     }
 
+    /**
+     * 更新数据并且更新价值文本
+     */
     private fun updateDataAndTotalStr(list: ArrayList<Thing>, preString: String) {
         var total = 0f
         list.let {
@@ -109,6 +119,9 @@ class MainVM(application: Application) : AndroidViewModel(application) {
         totalStr.postValue(str.replace(".0+$".toRegex(), ""))
     }
 
+    /**
+     * 监听输入框文本，筛选内容显示在列表中并计算价值小计同步更新UI
+     */
     private fun afterTextChanged(s: String) {
         repository.thingList?.let {
             val listResult: ArrayList<Thing> = ArrayList()
@@ -121,6 +134,9 @@ class MainVM(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /**
+     * 点击了录入按钮，在更新状态下是更新按钮
+     */
     fun clickInput(v: View) {
         etText.value?.let {
             if (it.isEmpty()) {
@@ -132,12 +148,18 @@ class MainVM(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    /**
+     * 点击了实时搜索复选框
+     */
     fun clickCheckBox(v: View) {
         searchFlag.value?.let {
             searchFlag.postValue(!it)
         }
     }
 
+    /**
+     * 点击了清除按钮，清除输入框中已输入的文本
+     */
     fun clickClear(v: View) {
         etText.postValue("")
     }

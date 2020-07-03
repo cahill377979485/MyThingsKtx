@@ -4,7 +4,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.google.gson.Gson
 import com.my.mythings2.model.bean.Thing
 import com.my.mythings2.model.bean.Things
-import com.my.mythings2.util.MyUtil
+import com.my.mythings2.xutil.MyUtil
 import java.util.ArrayList
 
 private const val DATA: String = "DATA"
@@ -12,7 +12,7 @@ private const val DATA: String = "DATA"
 /**
  * @author 文琳
  * @time 2020/6/23 11:23
- * @desc
+ * @desc 资料库，用于MVVM作为Model来提供数据，只在ViewModel中使用，不在View中使用，换句话说，不要在Activity或者Fragment中创建此实例
  */
 class MyRepository {
 
@@ -29,13 +29,16 @@ class MyRepository {
             return list
         }
 
+    /**
+     * 保存到本地缓存中
+     */
     fun save(list: List<Thing>?) {
-        SPUtils.getInstance().put(DATA, Gson().toJson(
-            Things(
-                list
-            ), Things::class.java))
+        SPUtils.getInstance().put(DATA, Gson().toJson(Things(list), Things::class.java))
     }
 
+    /**
+     * 添加数据并保存
+     */
     fun add(thing: Thing) {
         thingList?.let {
             it.add(0, thing)
@@ -58,7 +61,7 @@ class MyRepository {
 
     fun update(updatePosition: Int, str: String) {
         thingList?.let {
-            val arr: Array<String> = MyUtil.getNameAndPrice2(str)
+            val arr: Array<String> = MyUtil.getNameAndPriceArrayByRegex(str)
             //因为是倒序所以这里要list.size-1-position
             it[it.size - 1 - updatePosition].name = arr[0]
             it[it.size - 1 - updatePosition].price = arr[1]

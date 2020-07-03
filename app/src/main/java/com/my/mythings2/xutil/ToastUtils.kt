@@ -1,4 +1,4 @@
-package com.my.mythings2.util
+package com.my.mythings2.xutil
 
 import android.os.Handler
 import android.os.Looper

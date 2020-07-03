@@ -1,4 +1,4 @@
-package com.my.mythings2.util
+package com.my.mythings2.xutil
 
 import android.animation.ObjectAnimator
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.View
 /**
  * @author 文琳
  * @time 2020/6/18 17:00
- * @desc
+ * @desc 列表条目的显示动画，由中间向左右两边展开
  */
 private const val GOLDEN_RATIO = .618f
 

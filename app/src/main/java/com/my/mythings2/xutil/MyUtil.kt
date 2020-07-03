@@ -1,4 +1,4 @@
-package com.my.mythings2.util
+package com.my.mythings2.xutil
 
 import android.graphics.Color
 import androidx.recyclerview.widget.GridLayoutManager
@@ -14,10 +14,13 @@ import java.util.*
 /**
  * @author 文琳
  * @time 2020/6/17 9:51
- * @desc
+ * @desc 封装一些代码很多或者常用的方法
  */
 object MyUtil {
 
+    /**
+     * 设置长按拖动
+     */
     fun setHelper(rv: RecyclerView?, items: Items?, adapter: MultiTypeAdapter) {
         val helper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
             override fun getMovementFlags(
@@ -93,18 +96,20 @@ object MyUtil {
     /**
      * 解析物品和价格
      */
-    fun getNameAndPrice2(str: String): Array<String> {
+    fun getNameAndPriceArrayByRegex(str: String): Array<String> {
         val arr = arrayOf(str, "")
         str.let {
-            Regex("-?\\d*\\.?\\d*$").find(str)?.let {
+            Regex("-?\\d*\\.?\\d*$").find(str)?.let {//匹配出价格，将价格替换成空值，则相当于删除了价格，剩下的就是物品名称
                 arr[0] = str.replace(it.value, "")
                 arr[1] = it.value
             }
+            //价格只要是以.xx0 .x0 .0 .00结尾的都要做去除小数的处理
             Regex("\\.\\d*(0+)$").find(arr[1])?.let { result ->
                 result.groups[1]?.value?.let {
                     arr[1] = result.value.replace(it, "", ignoreCase = true)
                 }
             }
+            //前面的处理之后，还需要针对几种特殊情况进行处理，包括：直接以“.”结尾(需改成0)、类似“123.”(需去掉小数点)、类似“.132”(需在最前面加上“0”)
             when {
                 arr[1] == "." -> arr[1] = "0"
                 arr[1].endsWith(".") -> arr[1] = arr[1].substring(0, arr[1].length - 1)
