@@ -27,14 +27,9 @@ class MainVM(application: Application) : AndroidViewModel(application) {
     private val repository by lazy { MyRepository() }//本地存储工具类
     val watcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
-            if (searchFlag.value == true) {
-                etText.value?.let {
-                    if (it.isEmpty()) {
-                        refreshData()
-                    } else {
-                        afterTextChanged(s.toString())
-                    }
-                }
+            if (searchFlag.value != true) return
+            etText.value?.let {
+                if (it.isEmpty()) refreshData() else afterTextChanged(s.toString())
             }
         }
 

@@ -100,7 +100,9 @@ class MainActivity : AppCompatActivity() {
                         dialog.dismiss()
                     }
                     setPositiveButton("取消", null)
-                }.create().show()
+                    create()
+                    show()
+                }
             }
         }
     }
