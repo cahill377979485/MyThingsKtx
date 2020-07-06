@@ -10,6 +10,8 @@ import com.my.mythings2.model.MyRepository
 import com.my.mythings2.xutil.ToastUtils
 import com.my.mythings2.model.bean.Thing
 import com.my.mythings2.xutil.MyUtil
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * @author 文琳
@@ -94,7 +96,15 @@ class MainVM(application: Application) : AndroidViewModel(application) {
      */
     fun tryUpdateThing(thing: Thing) {
         updateFlag.postValue(true)
-        updatePosition = thing.position
+        updatePosition = -1
+        repository.thingList?.let { list ->
+            for (i in list.indices) {
+                if (list[i].name.toLowerCase(Locale.ROOT) == thing.name.toLowerCase(Locale.ROOT)) {
+                    updatePosition = i
+                    break
+                }
+            }
+        }
     }
 
     /**
@@ -105,7 +115,7 @@ class MainVM(application: Application) : AndroidViewModel(application) {
         list.let {
             for (i in it.indices) {
                 it[i].position = it.size - 1 - i
-                val price = (it[i].price).toFloat()
+                val price = it[i].price.toFloat()
                 total += price.times(100)
             }
             dataList.postValue(it)//这句因为数据改变，在MainActivity中被观察到，所以会自动更新列表
@@ -118,14 +128,12 @@ class MainVM(application: Application) : AndroidViewModel(application) {
      * 监听输入框文本，筛选内容显示在列表中并计算价值小计同步更新UI
      */
     private fun afterTextChanged(s: String) {
-        repository.thingList?.let {
-            val listResult: ArrayList<Thing> = ArrayList()
-            for (i in it.indices) {
-                val t: Thing = it[i]
-                if (t.name.contains(s))
-                    listResult.add(t)
+        repository.thingList?.let { list ->
+            list.filter {
+                it.name.toLowerCase(Locale.ROOT).contains(s.toLowerCase(Locale.ROOT))
+            }.apply {
+                updateDataAndTotalStr(this as ArrayList<Thing>, "总价值小计")
             }
-            updateDataAndTotalStr(listResult, "总价值小计")
         }
     }
 
