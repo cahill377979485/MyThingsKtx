@@ -2,6 +2,7 @@ package com.my.mythings2.view.binder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.recyclerview.widget.RecyclerView
 import com.my.mythings2.xutil.InAnimation
@@ -35,8 +36,8 @@ class ThingBinder : ItemViewBinder<Thing, ThingBinder.ThingHolder>() {
         }
         holder.binding.executePendingBindings()
         for (anim in mAnimation.getAnimators(holder.itemView)) {
+            anim.interpolator = DecelerateInterpolator()
             anim.setDuration(300).start()
-            anim.interpolator = LinearInterpolator()
         }
     }
 }

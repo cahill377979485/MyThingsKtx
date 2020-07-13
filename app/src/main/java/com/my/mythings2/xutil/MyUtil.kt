@@ -143,4 +143,14 @@ object MyUtil {
         }
         return arr
     }
+
+    fun doSomething(str: String, age: Int): Thing {
+        val t: Thing = Thing(
+            position = 0,
+            price = "12.3",
+            name = "xx"
+        )
+        t.price = "12.4"
+        return t
+    }
 }

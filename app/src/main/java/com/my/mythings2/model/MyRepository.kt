@@ -2,6 +2,7 @@ package com.my.mythings2.model
 
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import com.my.mythings2.model.bean.Thing
 import com.my.mythings2.model.bean.Things
 import com.my.mythings2.xutil.MyUtil
@@ -21,9 +22,13 @@ class MyRepository {
             var list: ArrayList<Thing> = ArrayList()
             val thingsStr: String = SPUtils.getInstance().getString(DATA)
             if (thingsStr.isNotEmpty()) {
-                val things: Things? = Gson().fromJson(thingsStr, Things::class.java)
-                things?.let {
-                    list = things.list as ArrayList<Thing>
+                try {
+                    val things: Things? = Gson().fromJson(thingsStr, Things::class.java)
+                    things?.let {
+                        list = things.list as ArrayList<Thing>
+                    }
+                } catch (e: JsonSyntaxException) {
+                    e.printStackTrace()
                 }
             }
             return list
@@ -33,7 +38,12 @@ class MyRepository {
      * 保存到本地缓存中
      */
     fun save(list: List<Thing>?) {
-        SPUtils.getInstance().put(DATA, Gson().toJson(Things(list), Things::class.java))
+        try {
+            val str = Gson().toJson(Things(list), Things::class.java)
+            if (str.isNotEmpty()) SPUtils.getInstance().put(DATA, str)
+        } catch (e: JsonSyntaxException) {
+            e.printStackTrace()
+        }
     }
 
     /**

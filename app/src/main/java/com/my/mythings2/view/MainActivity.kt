@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                     mBinding.et.setText(str)
                     mBinding.et.setSelection(str.length)
                 } else {
-                    mViewModel.refreshData()
+                    refreshData()
                 }
             })
             refreshData()
