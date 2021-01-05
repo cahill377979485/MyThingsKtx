@@ -5,10 +5,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.my.mythings2.model.MyRepository
-import com.my.mythings2.model.bean.Thing
-import me.drakeet.multitype.Items
-import me.drakeet.multitype.MultiTypeAdapter
+import com.drakeet.multitype.MultiTypeAdapter
+import com.my.mythings2.m.MyRepository
+import com.my.mythings2.m.bean.Thing
 import java.util.*
 
 /**
@@ -21,7 +20,7 @@ object MyUtil {
     /**
      * 设置长按拖动
      */
-    fun setHelper(rv: RecyclerView?, items: Items?, adapter: MultiTypeAdapter) {
+    fun setHelper(rv: RecyclerView?, items: ArrayList<Any>?, adapter: MultiTypeAdapter) {
         val helper = ItemTouchHelper(object : ItemTouchHelper.Callback() {
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
@@ -48,11 +47,11 @@ object MyUtil {
                 val toPosition = target.adapterPosition //得到目标ViewHolder的position
                 if (fromPosition < toPosition) {
                     for (i in fromPosition until toPosition) {
-                        Collections.swap(items, i, i + 1)
+                        Collections.swap(items as List<Any>, i, i + 1)
                     }
                 } else {
                     for (i in fromPosition downTo toPosition + 1) {
-                        Collections.swap(items, i, i - 1)
+                        Collections.swap(items as List<Any>, i, i - 1)
                     }
                 }
                 adapter.notifyItemMoved(fromPosition, toPosition)
@@ -99,10 +98,11 @@ object MyUtil {
     fun getNameAndPriceArrayByRegex(str: String): Array<String> {
         val arr = arrayOf(str, "")
         str.let {
-            Regex("-?\\d*\\.?\\d*$").find(str)?.let {//匹配出价格，将价格替换成空值，则相当于删除了价格，剩下的就是物品名称
-                arr[0] = str.replace(it.value, "")
-                arr[1] = it.value
-            }
+            Regex("-?\\d*\\.?\\d*$").find(str)
+                ?.let {//匹配出价格，将价格替换成空值，则相当于删除了价格，剩下的就是物品名称。其中名称在前，价格在后。名称是中文，价格是数字，数字可以是小数
+                    arr[0] = str.replace(it.value, "")
+                    arr[1] = it.value
+                }
             //价格只要是以.xx0 .x0 .0 .00结尾的都要做去除小数的处理
             Regex("\\.\\d*(0+)$").find(arr[1])?.let { result ->
                 result.groups[1]?.value?.let {
@@ -110,10 +110,9 @@ object MyUtil {
                 }
             }
             //前面的处理之后，还需要针对几种特殊情况进行处理，包括：直接以“.”结尾(需改成0)、类似“123.”(需去掉小数点)、类似“.132”(需在最前面加上“0”)
-            when {
-                arr[1] == "." -> arr[1] = "0"
-                arr[1].endsWith(".") -> arr[1] = arr[1].substring(0, arr[1].length - 1)
-                arr[1].startsWith(".") -> arr[1] = "0" + arr[1]
+            if (arr[1].contains(".")) {
+                arr[1] = arr[1].replace("0+?$", "")//后面的问号表示非贪婪匹配
+                arr[1] = arr[1].replace("[.]$", "")
             }
         }
         return arr
@@ -142,15 +141,5 @@ object MyUtil {
             arr[1] = if (priceStr.isEmpty()) "0" else priceStr
         }
         return arr
-    }
-
-    fun doSomething(str: String, age: Int): Thing {
-        val t: Thing = Thing(
-            position = 0,
-            price = "12.3",
-            name = "xx"
-        )
-        t.price = "12.4"
-        return t
     }
 }

@@ -1,4 +1,4 @@
-package com.my.mythings2.model.bean
+package com.my.mythings2.m.bean
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

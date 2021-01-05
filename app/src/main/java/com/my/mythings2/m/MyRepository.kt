@@ -1,12 +1,12 @@
-package com.my.mythings2.model
+package com.my.mythings2.m
 
 import com.blankj.utilcode.util.SPUtils
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import com.my.mythings2.model.bean.Thing
-import com.my.mythings2.model.bean.Things
+import com.my.mythings2.m.bean.Thing
+import com.my.mythings2.m.bean.Things
 import com.my.mythings2.xutil.MyUtil
-import java.util.ArrayList
+import java.util.*
 
 private const val DATA: String = "DATA"
 
@@ -24,9 +24,7 @@ class MyRepository {
             if (thingsStr.isNotEmpty()) {
                 try {
                     val things: Things? = Gson().fromJson(thingsStr, Things::class.java)
-                    things?.let {
-                        list = things.list as ArrayList<Thing>
-                    }
+                    things?.let { list = things.list as ArrayList<Thing> }
                 } catch (e: JsonSyntaxException) {
                     e.printStackTrace()
                 }

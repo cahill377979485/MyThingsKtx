@@ -1,6 +1,6 @@
-package com.my.mythings2.view.binder
+package com.my.mythings2.v.binder
 
-import com.my.mythings2.model.bean.Thing
+import com.my.mythings2.m.bean.Thing
 
 /**
  * @author 文琳

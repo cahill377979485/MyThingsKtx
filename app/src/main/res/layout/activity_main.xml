@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.my.mythings2.viewmodel.MainVM" />
+            type="com.my.mythings2.vm.MainVM" />
 
         <import type="android.view.View" />
     </data>
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
-        tools:context=".view.MainActivity">
+        tools:context=".v.MainActivity">
 
         <TextView
             android:id="@+id/tv_total"
@@ -28,6 +28,7 @@
             android:paddingEnd="8dp"
             android:text="@{vm.totalStr}"
             android:textColor="#383838"
+            android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@id/cb_search"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,6 +43,7 @@
             android:onClick="@{vm::clickCheckBox}"
             android:text="@string/real_time_search"
             android:textColor="#333333"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_total" />
 
@@ -55,6 +57,7 @@
             android:paddingStart="0dp"
             android:paddingEnd="20dp"
             android:text="@={vm.etText}"
+            android:textSize="16sp"
             app:addTextChangedListener="@{vm.watcher}"
             app:layout_constraintBottom_toBottomOf="@id/tv_input"
             app:layout_constraintEnd_toStartOf="@id/tv_input"
@@ -81,6 +84,7 @@
             android:onClick="@{vm::clickInput}"
             android:text='@{vm.updateFlag?"更新":"录入"}'
             android:textColor="#333333"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/cb_search"
             app:layout_constraintTop_toBottomOf="@id/tv_total"

@@ -1,4 +1,4 @@
-package com.my.mythings2.viewmodel
+package com.my.mythings2.vm
 
 import android.app.Application
 import android.text.Editable
@@ -6,10 +6,11 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.my.mythings2.model.MyRepository
+import com.my.mythings2.m.MyRepository
 import com.my.mythings2.xutil.ToastUtils
-import com.my.mythings2.model.bean.Thing
+import com.my.mythings2.m.bean.Thing
 import com.my.mythings2.xutil.MyUtil
+import kotlinx.coroutines.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -45,6 +46,15 @@ class MainVM(application: Application) : AndroidViewModel(application) {
     init {
         searchFlag.value = false
         updateFlag.value = false
+   }
+
+    fun getData(){
+        runBlocking {
+
+        }
+        MainScope().launch {
+            delay(1000)
+        }
     }
 
     /**
@@ -99,7 +109,7 @@ class MainVM(application: Application) : AndroidViewModel(application) {
         updatePosition = -1
         repository.thingList?.let { list ->
             for (i in list.indices) {
-                if (list[i].name.toLowerCase(Locale.ROOT) == thing.name.toLowerCase(Locale.ROOT)) {
+                if (list[i].name.equals(thing.name, ignoreCase = true)) {
                     updatePosition = i
                     break
                 }

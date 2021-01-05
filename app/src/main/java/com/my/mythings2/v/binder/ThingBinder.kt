@@ -1,16 +1,15 @@
-package com.my.mythings2.view.binder
+package com.my.mythings2.v.binder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
-import android.view.animation.LinearInterpolator
 import androidx.recyclerview.widget.RecyclerView
-import com.my.mythings2.xutil.InAnimation
-import com.my.mythings2.model.bean.Thing
-import com.my.mythings2.model.bean.TypeData
-import com.my.mythings2.xutil.TypeDataNames
+import com.drakeet.multitype.ItemViewBinder
 import com.my.mythings2.databinding.ThingBinding
-import me.drakeet.multitype.ItemViewBinder
+import com.my.mythings2.m.bean.Thing
+import com.my.mythings2.m.bean.TypeData
+import com.my.mythings2.xutil.InAnimation
+import com.my.mythings2.xutil.TypeDataNames
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -21,7 +20,7 @@ import org.greenrobot.eventbus.EventBus
 class ThingBinder : ItemViewBinder<Thing, ThingBinder.ThingHolder>() {
     private val mAnimation = InAnimation()
 
-    class ThingHolder(var binding: ThingBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ThingHolder(var binding: ThingBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(inflater: LayoutInflater, parent: ViewGroup): ThingHolder {
         return ThingHolder(ThingBinding.inflate(inflater, parent, false))

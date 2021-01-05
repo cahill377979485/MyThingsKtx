@@ -6,11 +6,11 @@
 
         <variable
             name="item"
-            type="com.my.mythings2.model.bean.Thing" />
+            type="com.my.mythings2.m.bean.Thing" />
 
         <variable
             name="click"
-            type="com.my.mythings2.view.binder.ClickThing" />
+            type="com.my.mythings2.v.binder.ClickThing" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,6 +26,7 @@
             android:onClick="@{()->click.onClick(item)}"
             android:text="@{String.valueOf(item.position+1)}"
             android:textColor="#666"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
@@ -37,6 +38,7 @@
             android:paddingEnd="8dp"
             android:text="@{item.name}"
             android:textColor="#383838"
+            android:textSize="16sp"
             app:layout_constraintEnd_toStartOf="@id/tv_price"
             app:layout_constraintStart_toEndOf="@id/tv_position" />
 
@@ -49,6 +51,7 @@
             android:paddingEnd="8dp"
             android:text="@{item.price}"
             android:textColor="#666"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_name" />
 
