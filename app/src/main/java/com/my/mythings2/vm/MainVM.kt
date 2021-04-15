@@ -7,12 +7,15 @@ import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.my.mythings2.m.MyRepository
-import com.my.mythings2.xutil.ToastUtils
 import com.my.mythings2.m.bean.Thing
 import com.my.mythings2.xutil.MyUtil
-import kotlinx.coroutines.*
+import com.my.mythings2.xutil.ToastUtils
+import com.my.mythings2.xutil.doSomething
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
-import kotlin.collections.ArrayList
 
 /**
  * @author 文琳
@@ -46,9 +49,9 @@ class MainVM(application: Application) : AndroidViewModel(application) {
     init {
         searchFlag.value = false
         updateFlag.value = false
-   }
+    }
 
-    fun getData(){
+    fun getData() {
         runBlocking {
 
         }

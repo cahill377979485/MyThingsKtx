@@ -98,22 +98,18 @@ object MyUtil {
     fun getNameAndPriceArrayByRegex(str: String): Array<String> {
         val arr = arrayOf(str, "")
         str.let {
-            Regex("-?\\d*\\.?\\d*$").find(str)
-                ?.let {//匹配出价格，将价格替换成空值，则相当于删除了价格，剩下的就是物品名称。其中名称在前，价格在后。名称是中文，价格是数字，数字可以是小数
-                    arr[0] = str.replace(it.value, "")
-                    arr[1] = it.value
-                }
-            //价格只要是以.xx0 .x0 .0 .00结尾的都要做去除小数的处理
-            Regex("\\.\\d*(0+)$").find(arr[1])?.let { result ->
-                result.groups[1]?.value?.let {
-                    arr[1] = result.value.replace(it, "", ignoreCase = true)
+            Regex("^(.*?)(-?\\d*\\.?\\d*)?$").find(str)?.let {
+                arr[0] = it.groupValues[1]//第一个括号匹配到的内容
+                arr[1] = it.groupValues[2]//第二个括号匹配到的内容
+                //针对几种特殊情况进行处理，包括：直接以“.”结尾(需改成0)、类似“123.”(需去掉小数点)、类似“.132”(需在最前面加上“0”)
+                if (arr[1].contains(".")) {
+                    arr[1] = arr[1].replace(Regex("0+?$"), "")//后面的问号表示非贪婪匹配
+                    arr[1] = arr[1].replace(Regex("\\.$"), "")//经过上面的去除尾部的0之后，如果直接以“.”结尾则去掉“.”
                 }
             }
-            //前面的处理之后，还需要针对几种特殊情况进行处理，包括：直接以“.”结尾(需改成0)、类似“123.”(需去掉小数点)、类似“.132”(需在最前面加上“0”)
-            if (arr[1].contains(".")) {
-                arr[1] = arr[1].replace("0+?$", "")//后面的问号表示非贪婪匹配
-                arr[1] = arr[1].replace("[.]$", "")
-            }
+            //如果金额为空则默认为0
+            if (arr[1] == "") arr[1] = "0"
+            if (arr[1].startsWith(".")) arr[1] = "0" + arr[1]
         }
         return arr
     }
